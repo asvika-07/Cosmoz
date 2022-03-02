@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Friend requests</title>
+		<script
+  	src="https://code.jquery.com/jquery-3.6.0.slim.js"integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="crossorigin="anonymous"></script>
+    </head>
+    <body>
+        {% if friend_requests %}
+		<div>
+		{% for request in friend_requests %}
+		<div>
+			<a href="{% url 'account_view' email=request.sender.email %}">
+				<div>
+					<img src="{{request.sender.ProfilePicture.url}}" alt="no profile picture">
+				</div>
+			</a>
+			<a href="{% url 'account_view' email=request.sender.email %}">
+				<div>
+					<h4>{{request.sender.username}}</h4>
+				</div>
+			</a>
+			<div>
+				<button type="button"
+	  			onclick='triggerDeclineFriendRequest("{{request.id}}")'>Decline</button>
+	  			<button type="button" onclick='triggerAcceptFriendRequest("{{request.id}}")'>Accept</button>
+				
+			</div>
+		</div>
+		{% endfor %}
+		
+		{% else %} 
+		<div>
+			<p>No results</p>
+		</div>
+		{% endif %}
+		</div>
+	<script type="text/javascript">
+
+			function onFriendRequestAccepted(){
+				location.reload();
+				location.href = "{% url 'account_view' email=user.email %}";
+			}
+		
+			function onFriendRequestDeclined(){
+				location.reload();
+				location.href = "{% url 'account_view' email=user.email %}";
+			}
+		
+			function triggerAcceptFriendRequest(friend_request_id){
+				acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+			}
+		
+			function triggerDeclineFriendRequest(friend_request_id){
+				declineFriendRequest(friend_request_id, onFriendRequestDeclined)
+			}
+	</script>
+		
+	{% include 'friend/snippets/accept_friend_request.html' %}
+	{% include 'friend/snippets/decline_friend_request.html' %}
+    </body>
+</html>

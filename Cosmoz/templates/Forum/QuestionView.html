@@ -1,0 +1,482 @@
+
+<head>
+    <meta charset="utf-8">
+
+    <title>bs4 forum - Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+        body {
+            margin-top: 20px;
+            color: #1a202c;
+            text-align: left;
+            background-color: #E5E4E2;
+        }
+
+        .inner-wrapper {
+            position: relative;
+            height: calc(100vh - 3.5rem);
+            transition: transform 0.3s;
+        }
+
+        @media (min-width: 992px) {
+            .sticky-navbar .inner-wrapper {
+                height: calc(100vh - 3.5rem - 48px);
+            }
+        }
+
+        .inner-main,
+        .inner-sidebar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inner-sidebar {
+            left: 0;
+            width: 235px;
+            border-right: 1px solid #cbd5e0;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        .inner-main {
+            right: 0;
+            left: 235px;
+        }
+
+        .inner-main-footer,
+        .inner-main-header,
+        .inner-sidebar-footer,
+        .inner-sidebar-header {
+            height: 3.5rem;
+            border-bottom: 1px solid #cbd5e0;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            flex-shrink: 0;
+        }
+
+        .inner-main-body,
+        .inner-sidebar-body {
+            padding: 1rem;
+            overflow-y: auto;
+            position: relative;
+            flex: 1 1 auto;
+        }
+
+        .inner-main-body .sticky-top,
+        .inner-sidebar-body .sticky-top {
+            z-index: 999;
+        }
+
+        .inner-main-footer,
+        .inner-main-header {
+            background-color: #fff;
+        }
+
+        .inner-main-footer,
+        .inner-sidebar-footer {
+            border-top: 1px solid #cbd5e0;
+            border-bottom: 0;
+            height: auto;
+            min-height: 3.5rem;
+        }
+
+        @media (max-width: 767.98px) {
+            .inner-sidebar {
+                left: -235px;
+            }
+
+            .inner-main {
+                left: 0;
+            }
+
+            .inner-expand .main-body {
+                overflow: hidden;
+            }
+
+            .inner-expand .inner-wrapper {
+                transform: translate3d(235px, 0, 0);
+            }
+        }
+
+        .nav .show>.nav-link.nav-link-faded,
+        .nav-link.nav-link-faded.active,
+        .nav-link.nav-link-faded:active,
+        .nav-pills .nav-link.nav-link-faded.active,
+        .navbar-nav .show>.nav-link.nav-link-faded {
+            color: #3367b5;
+            background-color: #c9d8f0;
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            color: #fff;
+            background-color: #467bcb;
+        }
+
+        .nav-link.has-icon {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link.active {
+            color: #467bcb;
+        }
+
+        .nav-pills .nav-link {
+            border-radius: .25rem;
+        }
+
+        .nav-link {
+            color: #4a5568;
+        }
+
+        .card {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid rgba(0, 0, 0, .125);
+            border-radius: .25rem;
+        }
+
+        .card-body {
+            flex: 1 1 auto;
+            min-height: 1px;
+            padding: 1rem;
+        }
+
+        .back_button {
+            border-radius: 4px;
+            background-color: #ffffff;
+            border: none;
+            color: #000000;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            /* padding: 20px;  */
+            width: 100px;
+            height: 30px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin-left: 25px;
+        }
+
+        .back_button span {
+            cursor: pointer;
+            display: border-box;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .back_button span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .back_button:hover span {
+            padding-right: 25px;
+            text-decoration: none;
+        }
+
+        .back_button:hover span:after {
+            opacity: 1;
+            right: 0;
+            text-decoration: none;
+        }
+
+        .back_button:hover {
+            background: #000000;
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        #back_button {
+            margin-top: -20px;
+            margin-left: -125px;
+
+        }
+    </style>
+
+</head>
+{% block extra_js%}
+<script src="http://malsup.github.com/jquery.form.js"></script>
+{% endblock %}
+
+<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+        integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
+    <div class="container">
+        <div class="main-body p-0">
+            <div class="inner-wrapper">
+                <!-- Inner sidebar -->
+                <a href="{% url 'Forum-view' %}" id="back_button" class="back_button"><i
+                        class="fa fa-arrow-left mr-2"></i>Back</a>
+                <div class="inner-sidebar">
+                    <!-- Inner sidebar header -->
+
+                    <div class="inner-sidebar-header justify-content-center">
+                        {% if request.user != DisplayQuestion.Author%}
+                        <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal"
+                            data-target="#threadModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-plus mr-2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            ADD ANSWER
+                        </button>
+                        {% endif %}
+                    </div>
+                    <!-- /Inner sidebar header -->
+
+                    <!-- Inner sidebar body -->
+                    <div class="inner-sidebar-body p-0">
+                        <div class="p-3 h-100" data-simplebar="init">
+                            <div class="simplebar-wrapper" style="margin: -16px;">
+                                <div class="simplebar-height-auto-observer-wrapper">
+                                    <div class="simplebar-height-auto-observer"></div>
+                                </div>
+                                <div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper"
+                                            style="height: 100%; overflow: hidden scroll;">
+                                            <div class="simplebar-content" style="padding: 16px;">
+                                                <nav class="nav nav-pills nav-gap-y-1 flex-column">
+                                                    <a href="javascript:void(0)"
+                                                        class="nav-link nav-link-faded has-icon active">All Threads</a>
+                                                    <!-- <a href="javascript:void(0)"
+                                                        class="nav-link nav-link-faded has-icon">Popular this week</a>
+                                                    <a href="javascript:void(0)"
+                                                        class="nav-link nav-link-faded has-icon">Popular all time</a>
+                                                    <a href="javascript:void(0)"
+                                                        class="nav-link nav-link-faded has-icon">Solved</a>
+                                                    <a href="javascript:void(0)"
+                                                        class="nav-link nav-link-faded has-icon">Unsolved</a>
+                                                    <a href="javascript:void(0)"
+                                                        class="nav-link nav-link-faded has-icon">No replies yet</a> -->
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="simplebar-placeholder" style="width: 234px; height: 292px;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                                <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                            </div>
+                            <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                                <div class="simplebar-scrollbar"
+                                    style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Inner sidebar body -->
+                </div>
+                <!-- /Inner sidebar -->
+
+                <!-- Inner main -->
+                <div class="inner-main">
+                    <!-- Inner main header -->
+                    <div class="inner-main-header">
+                        <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#"
+                            data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
+                        <h4> {{DisplayQuestion.Question}}</h4>
+                        <div class="text-muted small text-center align-self-center">
+                            {% if request.user == DisplayQuestion.Author %}
+                            <a class="fas fa-edit" data-toggle="modal" style="font-size:15px;"
+                                href="{{DisplayQuestion.QuestionID}}/editquestion" data-target="#editModal"
+                                title="edit question" data-tooltip></i></a>
+
+                            <br>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- /Inner main header -->
+
+                    <!-- Inner main body -->
+
+                    <!-- Forum List -->
+                    <div class="modal fade" id="EditAnsmodal" tabindex="-1" role="dialog"
+                        aria-labelledby="threadModalLabel" aria-hidden="true">
+                    </div>
+
+                    <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+
+                        {% for object in DisplayAnswers %}
+                        <div class="card mb-2" id="answer_box">
+
+                            <div class="card-body p-2 p-sm-3">
+
+                                <div class="media forum-item">
+
+                                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img
+                                            src="{{ object.Author.ProfilePicture.url }}" class="mr-3 rounded-circle"
+                                            width="50" alt="User" /></a>
+
+                                    <div class="media-body">
+                                        <h6><a href="{% url 'Question-view' object.question.QuestionID%}"
+                                                data-target=".forum-content" class="text-body">
+                                                {{object.question_id.Question }}</a></h6>
+
+                                        <p class="text-secondary">
+                                            {{object.Answer |safe}}
+                                        <p class="text-muted"><a
+                                                href="{%url 'account_view' object.Author %}">{{object.Author.username}}</a>
+                                            answered at <span
+                                                class="text-secondary font-weight-bold">{{object.TimeStamp}}</span></p>
+                                    </div>
+
+                                    <div class="text-muted small text-center align-self-center">
+
+                                        <form
+                                            action="{% url 'like_post' ques_id=object.question_id answer_id=object.AnswerID  %}"
+                                            method="POST">
+                                            {% csrf_token %}
+                                            {% if liked %}
+                                            <button class="btn" type="submit" , name="unlike_id" ,id="unlike"
+                                                value="{{ object.AnswerID }}">
+                                                <i class="fas fa-heart" style="font-size:15px;color:red;"></i>
+                                            </button>
+                                            {%else%}
+                                            <button class="btn" type="submit" , name="like_id" ,id="like"
+                                                value="{{ object.AnswerID }}">
+                                                <i class="far fa-heart" style="font-size:15px;"></i>
+                                            </button>
+
+                                            {% endif %}
+                                            <a> {{object.likes.count }} </a>
+                                        </form>
+                                        {% if request.user == object.Author %}
+
+                                        <div>
+                                            <a class="fas fa-edit data-toggle=" data-toggle="modal"
+                                                href="#EditAnswerModal" title="edit answer" data-tooltip
+                                                style="font-size:20px;"></a>
+                                            {% include "Forum/AnswerEdit.html" %}
+                                            <br>
+                                        </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        {%endfor%}
+
+
+                    </div>
+
+                </div>
+                <!-- /Inner main -->
+            </div>
+
+            <!-- New Thread Modal -->
+            <div class="modal fade" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form method="POST" enctype="multipart/form-data"
+                            action="{{DisplayQuestion.QuestionID}}/answer">
+                            {% csrf_token %}
+
+                            <div class="modal-header d-flex align-items-center bg-primary text-white">
+                                <h6 class="modal-title mb-0" id="threadModalLabel">Add Answer</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="threadTitle">Answer</label>
+                                    <input type="text" name="Answer" class="form-control" id="threadTitle"
+                                        placeholder="Enter Answer" autofocus="" value="{{Answer}}">
+                                </div>
+                                <textarea class="form-control summernote" style="display: none;"></textarea>
+
+                                <div class="custom-file form-control-sm mt-3" style="max-width: 300px;">
+                                    <input type="file" class="custom-file-input" id="customFile" multiple="" />
+                                    <label class="custom-file-label" for="customFile">Attachment</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Question Modal -->
+
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <form method="POST" enctype="multipart/form-data"
+                            action="{{DisplayQuestion.QuestionID}}/editquestion">
+                            {% csrf_token %}
+
+                            <div class="modal-header d-flex align-items-center bg-primary text-white">
+                                <h6 class="modal-title mb-0" id="threadModalLabel">Edit Question</h6>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="threadTitle">Question</label>
+                                    <input type="text" name="Question" class="form-control" id="threadTitle"
+                                        placeholder="Enter Question" autofocus="" value="{{DisplayQuestion.Question}}">
+                                </div>
+                                <textarea class="form-control summernote" style="display: none;"></textarea>
+
+                                <div class="custom-file form-control-sm mt-3" style="max-width: 300px;">
+                                    <input type="file" class="custom-file-input" id="customFile" multiple="" />
+                                    <label class="custom-file-label" for="customFile">Attachment</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-light" href="{{DisplayQuestion.QuestionID}}/deletequestion">Delete
+                                    Question</a>
+
+                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</body>

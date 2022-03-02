@@ -1,0 +1,195 @@
+{%extends "base.html"%}
+{%block content%}
+<title>Cosmoz:Dashboard</title>
+
+<h3 class="add_post_option">
+    <button><a href="{% url 'PostCreate-view' %}">Add Post <i class="fas fa-plus"></i></a></button>
+</h3>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: 'Calluna';
+            src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/callunasansregular-webfont.woff') format('woff');
+        }
+
+        body {
+            /* background: url(//subtlepatterns.com/patterns/scribble_light.png); */
+            font-family: Calluna, Arial, sans-serif;
+            min-height: 1000px;
+        }
+
+        #columns {
+            column-width: 350px;
+            column-gap: 25px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 80px auto;
+        }
+
+        div#columns figure {
+            background: #fefefe;
+            border: 2px solid #fcfcfc;
+            box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+            margin: 0 2px 15px;
+            padding: 15px;
+            padding-bottom: 10px;
+            border-radius: 20px;
+            /* transition: opacity .4s ease-in-out; */
+            display: inline-block;
+            /* column-break-inside: avoid; */
+        }
+
+        div#columns figure img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 5px;
+        }
+
+        div#columns figure figcaption {
+            font-size: .9rem;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        div#columns small {
+            font-size: 1rem;
+            float: right;
+            text-transform: uppercase;
+            color: #aaa;
+        }
+
+        div#columns small a {
+            color: #666;
+            text-decoration: none;
+            transition: .4s color;
+        }
+
+        /* 
+div#columns:hover figure:not(:hover) {
+	opacity: 0.4;
+} */
+
+        @media screen and (max-width: 750px) {
+            #columns {
+                column-gap: 0px;
+            }
+
+            #columns figure {
+                width: 100%;
+            }
+        }
+
+        .add_post_option button {
+            margin: 5rem 0rem 0rem 30rem;
+            display: block;
+            width: 50%;
+            height: 50px;
+            background-color: grey;
+            border: 1px solid black;
+            border-radius: 20px;
+            color: black;
+            text-align: center;
+
+        }
+
+        .add_post_option button:hover {
+            background-color: white;
+
+
+        }
+
+        .add_post_option a {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        form button {
+            color: red;
+            margin-top: 0px;
+            margin-left: 0px;
+            background: transparent;
+            border: none;
+
+        }
+
+        form button:hover {
+            background: rgba(0, 0, 0, 0.397);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+
+        }
+
+        #Comments_btn a {
+
+            text-decoration: none;
+            color: black;
+        }
+
+        #Comments_btn {
+            background: transparent;
+            border: none;
+        }
+
+        #view_comments {
+            /* background: rgba(3, 3, 3, 0.377); */
+            border-radius: 20px;
+            margin-left: 190px;
+            border: none;
+
+        }
+
+        #view_comments a {
+            color: black;
+            /* text-decoration: none; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="columns">
+
+
+        {% for post in object_list %}
+        <figure>
+            <div class="post-entry">
+                <div class="date">
+                    {{ post.TimeStamp }}
+                </div>
+                <h2>{{ post.Title }}</a></h2>
+                {% if post.Image%}
+                <img class="dash-img" src="{{post.Image.url}}" alt="Unable to load image!" width=200x height=auto>
+                {% endif %}
+                {{ post.TextContent|safe }}
+                <button id="Comments_btn"><i class="fas fa-comment"></i></a></button>: {{ post.comments.count }}
+
+            </div>
+
+            <form action="{% url 'like_post' post.PostID %}" method="POST">
+                {% csrf_token %}
+                {% if liked %}
+                <button type="submit" , name="post_id" ,value="{{ post.PostID }}" ,
+                    class="btn btn-danger btn-sm">UnLike</button>
+                {%else%}
+                <button type="submit" , name="post_id" ,value="{{ post.PostID }}" ,
+                    class="btn btn-primary btn-sm">Like</button>
+                {% endif %}
+                <a> {{post.likes.count }} </a>
+            </form>
+            <button id="view_comments"><a href="{{post.PostID}}">View Comments</a></button>
+            <!-- <button id="view_comments"><a  href="{{post.PostID}}">View post</a></button> -->
+        </figure>
+        {% endfor %}
+
+</body>
+
+</html>
+{%endblock%}

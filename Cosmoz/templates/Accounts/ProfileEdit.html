@@ -1,0 +1,168 @@
+{%extends "base.html"%}
+{%block content%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js'></script>
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            /* margin-top:20px; */
+            /* background:#f8f8f8 */
+            background: url('https://endingthegame.com/wp-content/uploads/2014/08/blue-grey-wallpaper-hd-wallpapers-desktop-res-wallpaper-grey-blue-hd-wallpapers-desktop.jpg') no-repeat 100%;
+            /* background-repeat: repeat-y; */
+            background-size: cover;
+        }
+
+        .tab-pane form input {
+
+            border-radius: 20px;
+            background: transparent;
+            background-color: grey;
+            border: 1px solid black;
+            border: hidden;
+        }
+
+        .tab-pane form input:hover {
+            /* border: 1px solid black; */
+            cursor: pointer;
+        }
+
+        .text_area::placeholder {
+            font-weight: 300;
+        }
+
+        .text_area {
+            padding-left: 0.8rem;
+            border: 1px solid black;
+
+        }
+
+        textarea {
+            margin-top: 15px;
+        }
+
+        form input[type="file"] {
+            background: black;
+            color: white;
+        }
+
+        form input[type="submit"]:hover {
+            background: black;
+            color: white;
+        }
+
+        .rounded-circle {
+            height: 140px !important;
+            width: 140px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <div class="row flex-lg-nowrap">
+            <!-- <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
+        <div class="card p-3">
+            <input class="btn btn-block btn-secondary">
+                <i class="fa fa-sign-out"></i>
+                <span></span>
+              </input>
+        </div>
+      </div> -->
+
+            <div class="col">
+                <div class="row">
+                    <div class="col mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="e-profile">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-auto mb-3">
+                                            <div class="mx-auto" style="width: 140px;">
+                                                <div class="d-flex justify-content-center align-items-center rounded"
+                                                    style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                    <img id="id_ProfilePicture" src="{{user.ProfilePicture.url}}"
+                                                        class="rounded-circle" width="150">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                            <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{user.FirstName}}
+                                                    {{user.LastName}}</h4>
+                                                <p class="mb-0">@{{user.username}}</p>
+                                                <div class="text-muted"><small>timinigs</small></div>
+
+                                            </div>
+                                            <div class="text-center text-sm-right">
+                                                <span class="badge badge-secondary">{{user.UserType}}</span>
+                                                <div class="text-muted"><small>Joined 20 April 2021</small></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a href="" class="active nav-link">About</a></li>
+                                    </ul>
+                                    <div class="tab-content pt-3">
+                                        <div class="tab-pane active">
+                                            <form method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <!-- <label for="id_ProfilePicture" class="button">Choose Image</label> -->
+                                                {{ form.as_p }}
+                                                <div class="form-group shadow-textarea">
+
+
+                                                    <!-- <input type=" file" name="ProfilePicture" accept="image/*"
+                                                        id="id_ProfilePicture">
+
+                              </input>                   
+                            <div class="form-group shadow-textarea">
+                                <textarea class="form-control z-depth-1"  name="Description" cols="40" rows="10" maxlength="200" required=""  id="id_Description""></textarea>
+                                                </div> -->
+                                                    <input type="submit"></input>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-12 col-md-3 mb-3">
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="px-xl-3">
+                  <input class="btn btn-block btn-secondary">
+                    <i class="fa fa-sign-out"></i>
+                    <span>Logout</span>
+                  </input>
+                </div>
+              </div>
+            </div> -->
+                    <!-- <div class="card">
+              <<div class="card-body">
+                <h6 class="card-title font-weight-bold">Support</h6>
+                <p class="card-text">Get fast, free help from our friendly assistants.</p>
+                <input type="input" class="btn btn-primary">Contact Us</input>
+              </div> 
+            </div>
+          </div>
+        </div>-->
+
+                </div>
+            </div>
+        </div>
+</body>
+
+{%endblock%}

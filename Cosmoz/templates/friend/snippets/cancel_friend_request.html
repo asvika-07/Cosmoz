@@ -1,0 +1,36 @@
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+<script type="text/javascript">
+	
+	function cancelFriendRequest(email, uiUpdateFunction){
+		payload = {
+			"csrfmiddlewaretoken": "{{ csrf_token }}",
+			"receiver_email": email,
+		}
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url: "{% url 'Connect:friend-request-cancel' %}",
+			data: payload,
+			timeout: 5000,
+			success: function(data) {
+				console.log("SUCCESS", data)
+				if(data['response'] == "Friend request canceled."){
+					alert(data['response'])
+				}
+				else if(data['response'] != null){
+					alert(data['response'])
+				}
+			},
+			error: function(data) {
+				console.error("ERROR...", data)
+				alert("Something went wrong.")
+			},
+			complete: function(data){
+				uiUpdateFunction()
+			}
+		});
+	}
+	
+
+</script>
+

@@ -1,0 +1,80 @@
+{%extends "base.html"%}
+{%block content%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <style>
+        .require {
+            color: #666;
+        }
+
+        label small {
+            color: #999;
+            font-weight: normal;
+        }
+
+        h1 {
+            margin-bottom: 45px;
+        }
+
+        form input[type="text"] {
+            border-radius: 20px;
+            border: none;
+            height: 40px;
+            text-align: center
+                /* width=150px; */
+        }
+
+        .submit {
+            margin-top: 15px;
+            border-radius: 15px;
+            border: 1px solid black;
+            width: 150px;
+            height: 50px;
+            margin-left: 40%;
+
+
+
+        }
+
+        button:hover {
+
+            background: black;
+            color: white;
+            border: 1px solid black;
+
+        }
+
+        .fr-element {
+            height: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 col-md-offset-2">
+
+                <h1>Edit post: </h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{ form.as_p }}
+                    <input type="submit" value="Update">
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+{%endblock%}
